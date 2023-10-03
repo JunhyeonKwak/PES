@@ -17,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -28,6 +29,17 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+        String requestURI = request.getRequestURI();
+
+        List<String> skipUrls = Arrays.asList("/", "/signin", "/signup", "/finduser");
+
+        // 인증이 필요없는 경로는 바로 통과
+        if (skipUrls.contains(requestURI)) {
+            log.info("인증 필요 없음 : {}", requestURI);
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         // 쿠키에서 Authorization 키를 가진 쿠키 찾기
         String token = null;
