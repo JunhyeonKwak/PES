@@ -16,8 +16,8 @@ import javax.persistence.*;
 public class DetailMemberEntity extends BaseEntity{
 
     @Id
-    @Column(name = "memberStuNum")
-    private String memberStuNum; // 학번
+    @Column(name = "memberEmail", unique = true)
+    private String memberEmail; // 이메일
 
     @Column(name = "memberPw")
     private String memberPw; // 암호화된 비밀번호
@@ -28,11 +28,6 @@ public class DetailMemberEntity extends BaseEntity{
     @Column(name = "memberPhone", unique = true)
     private String memberPhone; // 전화번호
 
-    @Column(name = "memberEmail", unique = true)
-    private String memberEmail; // 이메일
-
-    @OneToOne
-    @MapsId  // 이 어노테이션은 MemberEntity의 PK를 DetailMemberEntity의 PK/FK로 사용하게 만듭니다.
-    @JoinColumn(name = "memberStuNum")
+    @OneToOne(mappedBy = "detailMemberEntity", cascade = CascadeType.ALL)
     private MemberEntity memberEntity;
 }

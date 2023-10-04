@@ -45,51 +45,52 @@ public class MemberService {
                     throw new AppException(ErrorCode.USERNAME_DUPLICATED, "이미 가입된 학번입니다.");
                 });
 
-        // 저장
+        // DetailMemberEntity 먼저 생성
+        DetailMemberEntity detailMemberEntity = DetailMemberEntity.builder()
+                .memberEmail(dto.getMemberEmail())
+                .memberPw(encoder.encode(pw))
+                .memberMajor(dto.getMemberMajor())
+                .memberPhone(dto.getMemberPhone())
+                .build();
+        detailMemberRepository.save(detailMemberEntity);
+
+        // MemberEntity 생성
         MemberEntity memberEntity = MemberEntity.builder()
                 .memberStuNum(stuNum)
-                .memberName(dto.getMemberName())
+                .memberName(name)
                 .memberGen(dto.getMemberGen())
                 .memberStatus("신입생")
                 .memberScore(0)
                 .memberGitUrl(dto.getMemberGitUrl())
+                .detailMemberEntity(detailMemberEntity)
                 .build();
         memberRepository.save(memberEntity);
-
-        DetailMemberEntity detailMemberEntity = DetailMemberEntity.builder()
-                .memberStuNum(stuNum)
-                .memberPw(encoder.encode(pw))
-                .memberMajor(dto.getMemberMajor())
-                .memberPhone(dto.getMemberPhone())
-                .memberEmail(dto.getMemberEmail())
-                .build();
-        detailMemberRepository.save(detailMemberEntity);
 
         return name;
     }
 
-    // 로그인
-    public String signIn(MemberDTO.MemberSignInRequest dto) {
-        String stuNum = dto.getMemberStuNum();
-        String pw = dto.getMemberPw();
-        Long expireTimeMs = 1000 * 60 * 60l;
-
-        // Email 및 password 빈칸 체크
-        if (stuNum.isBlank() || pw.isBlank()) {
-            throw new AppException(ErrorCode.INVALID_INPUT, "필수 입력 사항을 입력해 주세요.");
-        }
-
-        // Email 없는 경우
-        DetailMemberEntity selectedMember = detailMemberRepository.findByMemberStuNum(stuNum)
-                .orElseThrow(()-> new AppException(ErrorCode.USER_NOT_FOUND, "로그인에 실패했습니다."));
-
-        // password 틀린 경우
-        if(!encoder.matches(pw, selectedMember.getMemberPw())){
-            throw new AppException(ErrorCode.INVALID_INPUT, "로그인에 실패했습니다.");
-        }
-
-        return JwtUtil.createToken(selectedMember.getMemberStuNum(), secretKey, expireTimeMs);
-    }
+    //로그인
+//    public String signIn(MemberDTO.MemberSignInRequest dto) {
+//        String stuNum = dto.getMemberStuNum();
+//        String pw = dto.getMemberPw();
+//        Long expireTimeMs = 1000 * 60 * 60l;
+//
+//        // Email 및 password 빈칸 체크
+//        if (stuNum.isBlank() || pw.isBlank()) {
+//            throw new AppException(ErrorCode.INVALID_INPUT, "필수 입력 사항을 입력해 주세요.");
+//        }
+//
+//        // Email 없는 경우
+//        DetailMemberEntity selectedMember = detailMemberRepository.findByMemberStuNum(stuNum)
+//                .orElseThrow(()-> new AppException(ErrorCode.USER_NOT_FOUND, "로그인에 실패했습니다."));
+//
+//        // password 틀린 경우
+//        if(!encoder.matches(pw, selectedMember.getMemberPw())){
+//            throw new AppException(ErrorCode.INVALID_INPUT, "로그인에 실패했습니다.");
+//        }
+//
+//        return JwtUtil.createToken(selectedMember.getMemberStuNum(), secretKey, expireTimeMs);
+//    }
 
     public MemberEntity findByMemberStuNum(String memberStuNum) {
         return memberRepository.findByMemberStuNum(memberStuNum)

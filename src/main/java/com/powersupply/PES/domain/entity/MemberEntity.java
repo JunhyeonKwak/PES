@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Table(name = "detail_member_table")
+@Table(name = "member_table")
 public class MemberEntity {
 
     @Id
@@ -34,7 +34,7 @@ public class MemberEntity {
     @Column(name = "memberStatus")
     private String memberStatus; // 상태(신입생/재학생/관리자)
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "memberStuNum")
-    private DetailMemberEntity detail;
+    @OneToOne
+    @JoinColumn(name = "memberEmail")
+    private DetailMemberEntity detailMemberEntity;
 }

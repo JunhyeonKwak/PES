@@ -42,18 +42,18 @@ public class MemberController {
     }
 
     // 로그인 진행
-    @PostMapping("/signin")
-    public ResponseEntity<String> postSignIn(HttpServletResponse response, @RequestBody MemberDTO.MemberSignInRequest dto) {
-        String token = memberService.signIn(dto);
-
-        Cookie cookie = new Cookie("Authorization", token);
-        cookie.setMaxAge(60 * 60); // 쿠키 유효 시간 (예: 1시간)
-        //cookie.setSecure(true); // HTTPS에서만 쿠키 사용
-        //cookie.setHttpOnly(true); // JavaScript에서 쿠키에 접근할 수 없도록 설정
-        response.addCookie(cookie);
-
-        return ResponseUtil.successResponse("로그인에 성공했습니다.");
-    }
+//    @PostMapping("/signin")
+//    public ResponseEntity<String> postSignIn(HttpServletResponse response, @RequestBody MemberDTO.MemberSignInRequest dto) {
+//        String token = memberService.signIn(dto);
+//
+//        Cookie cookie = new Cookie("Authorization", token);
+//        cookie.setMaxAge(60 * 60); // 쿠키 유효 시간 (예: 1시간)
+//        //cookie.setSecure(true); // HTTPS에서만 쿠키 사용
+//        //cookie.setHttpOnly(true); // JavaScript에서 쿠키에 접근할 수 없도록 설정
+//        response.addCookie(cookie);
+//
+//        return ResponseUtil.successResponse("로그인에 성공했습니다.");
+//    }
 
     // 마이페이지
     @GetMapping("/mypage")
