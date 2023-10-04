@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -21,4 +23,7 @@ public class ProblemEntity extends BaseEntity{
     private String problemTitle;
     private String problemContent;
     private int problemScore;
+
+    @OneToMany(mappedBy = "problemEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<QuestionEntity> questionEntities = new ArrayList<>();
 }
