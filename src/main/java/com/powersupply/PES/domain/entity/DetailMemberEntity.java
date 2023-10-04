@@ -12,8 +12,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Table(name = "member_table")
-public class MemberEntity extends BaseEntity{
+@Table(name = "detail_member_table")
+public class DetailMemberEntity extends BaseEntity{
 
     private String memberStuNum; // 학번
     private String memberPw; // 멤버 비밀번호
