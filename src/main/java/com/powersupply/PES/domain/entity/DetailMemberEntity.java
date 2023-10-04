@@ -15,6 +15,7 @@ import javax.persistence.*;
 @Table(name = "detail_member_table")
 public class DetailMemberEntity extends BaseEntity{
 
+    @Id
     private String memberStuNum; // 학번
     private String memberPw; // 멤버 비밀번호
     private String memberName; // 이름
