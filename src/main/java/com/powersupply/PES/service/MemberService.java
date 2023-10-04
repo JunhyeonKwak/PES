@@ -1,15 +1,18 @@
 package com.powersupply.PES.service;
 
 import com.powersupply.PES.domain.dto.MemberDTO;
+import com.powersupply.PES.domain.entity.DetailMemberEntity;
 import com.powersupply.PES.domain.entity.MemberEntity;
 import com.powersupply.PES.exception.AppException;
 import com.powersupply.PES.exception.ErrorCode;
+import com.powersupply.PES.repository.DetailMemberRepository;
 import com.powersupply.PES.repository.MemberRepository;
 import com.powersupply.PES.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +22,12 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final DetailMemberRepository detailMemberRepository;
     private final BCryptPasswordEncoder encoder;
     @Value("${jwt.secret}")
     private String secretKey;
 
+    @Transactional
     public String signUp(MemberDTO.MemberSignUpRequest dto) {
 
         String stuNum = dto.getMemberStuNum();
@@ -43,17 +48,22 @@ public class MemberService {
         // 저장
         MemberEntity memberEntity = MemberEntity.builder()
                 .memberStuNum(stuNum)
-                .memberPw(encoder.encode(pw))
                 .memberName(dto.getMemberName())
                 .memberGen(dto.getMemberGen())
-                .memberMajor(dto.getMemberMajor())
-                .memberPhone(dto.getMemberPhone())
                 .memberStatus("신입생")
                 .memberScore(0)
-                .memberEmail(dto.getMemberEmail())
                 .memberGitUrl(dto.getMemberGitUrl())
                 .build();
         memberRepository.save(memberEntity);
+
+        DetailMemberEntity detailMemberEntity = DetailMemberEntity.builder()
+                .memberStuNum(stuNum)
+                .memberPw(encoder.encode(pw))
+                .memberMajor(dto.getMemberMajor())
+                .memberPhone(dto.getMemberPhone())
+                .memberEmail(dto.getMemberEmail())
+                .build();
+        detailMemberRepository.save(detailMemberEntity);
 
         return name;
     }
@@ -70,7 +80,7 @@ public class MemberService {
         }
 
         // Email 없는 경우
-        MemberEntity selectedMember = memberRepository.findByMemberStuNum(stuNum)
+        DetailMemberEntity selectedMember = detailMemberRepository.findByMemberStuNum(stuNum)
                 .orElseThrow(()-> new AppException(ErrorCode.USER_NOT_FOUND, "로그인에 실패했습니다."));
 
         // password 틀린 경우
@@ -86,6 +96,7 @@ public class MemberService {
                 .orElseThrow(()-> new AppException(ErrorCode.USER_NOT_FOUND, "해당 학번은 등록되지 않았습니다."));
     }
 
+
     public MemberDTO.MemberMyPageResponse getMyPage() {
         MemberEntity memberEntity = memberRepository.findByMemberStuNum(JwtUtil.getMemberStuNumFromToken())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND, "오류가 발생했습니다."));
@@ -94,11 +105,11 @@ public class MemberService {
                 .memberStuNum(memberEntity.getMemberStuNum())
                 .memberName(memberEntity.getMemberName())
                 .memberGen(memberEntity.getMemberGen())
-                .memberMajor(memberEntity.getMemberMajor())
-                .memberPhone(memberEntity.getMemberPhone())
+//                .memberMajor(memberEntity.getMemberMajor())
+//                .memberPhone(memberEntity.getMemberPhone())
                 .memberStatus(memberEntity.getMemberStatus())
                 .memberScore(memberEntity.getMemberScore())
-                .memberEmail(memberEntity.getMemberEmail())
+//                .memberEmail(memberEntity.getMemberEmail())
                 .memberGitUrl(memberEntity.getMemberGitUrl())
                 .build();
         return myPageResponse;

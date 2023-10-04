@@ -16,14 +16,23 @@ import javax.persistence.*;
 public class DetailMemberEntity extends BaseEntity{
 
     @Id
+    @Column(name = "memberStuNum")
     private String memberStuNum; // 학번
-    private String memberPw; // 멤버 비밀번호
-    private String memberName; // 이름
-    private int memberGen; // 기수
+
+    @Column(name = "memberPw")
+    private String memberPw; // 암호화된 비밀번호
+
+    @Column(name = "memberMajor")
     private String memberMajor; // 학과
+
+    @Column(name = "memberPhone", unique = true)
     private String memberPhone; // 전화번호
-    private String memberStatus; // 상태
+
+    @Column(name = "memberEmail", unique = true)
     private String memberEmail; // 이메일
-    private int memberScore; // 점수
-    private String memberGitUrl; // 깃주소
+
+    @OneToOne
+    @MapsId  // 이 어노테이션은 MemberEntity의 PK를 DetailMemberEntity의 PK/FK로 사용하게 만듭니다.
+    @JoinColumn(name = "memberStuNum")
+    private MemberEntity memberEntity;
 }
