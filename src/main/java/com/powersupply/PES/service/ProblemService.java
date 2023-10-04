@@ -31,7 +31,7 @@ public class ProblemService {
         // 저장
         for(ProblemEntity problemEntity : problemEntityList) {
             ProblemDTO.ProblemResponse problemResponse = ProblemDTO.ProblemResponse.builder()
-                    .problemId(problemEntity.getId())
+                    .problemId(problemEntity.getProblemId())
                     .problemTitle(problemEntity.getProblemTitle())
                     .problemScore(problemEntity.getProblemScore())
                     .build();

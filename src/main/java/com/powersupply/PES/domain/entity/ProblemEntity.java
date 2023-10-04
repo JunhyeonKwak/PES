@@ -17,7 +17,7 @@ public class ProblemEntity extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long problemId;
     private String problemTitle;
     private String problemContent;
     private int problemScore;
