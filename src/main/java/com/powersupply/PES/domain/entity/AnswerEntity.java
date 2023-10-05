@@ -26,4 +26,12 @@ public class AnswerEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "memberStuNum")
     private MemberEntity memberEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "questionFst")
+    private  QuestionEntity questionFst;
+
+    @ManyToOne
+    @JoinColumn(name = "questionSec")
+    private  QuestionEntity questionSec;
 }
