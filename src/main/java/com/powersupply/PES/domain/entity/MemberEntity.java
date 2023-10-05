@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -37,4 +39,7 @@ public class MemberEntity {
     @OneToOne
     @JoinColumn(name = "memberEmail")
     private DetailMemberEntity detailMemberEntity;
+
+    @OneToMany(mappedBy = "memberEntity")
+    private List<AnswerEntity> answerEntityList = new ArrayList<>();
 }
