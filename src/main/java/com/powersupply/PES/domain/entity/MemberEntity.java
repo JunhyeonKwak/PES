@@ -36,8 +36,7 @@ public class MemberEntity {
     @Column(name = "memberStatus")
     private String memberStatus; // 상태(신입생/재학생/관리자)
 
-    @OneToOne
-    @JoinColumn(name = "memberEmail")
+    @OneToOne(mappedBy = "memberEntity")
     private DetailMemberEntity detailMemberEntity;
 
     @OneToMany(mappedBy = "memberEntity")

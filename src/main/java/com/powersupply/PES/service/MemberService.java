@@ -45,15 +45,6 @@ public class MemberService {
                     throw new AppException(ErrorCode.USERNAME_DUPLICATED, "이미 가입된 학번입니다.");
                 });
 
-        // DetailMemberEntity 먼저 생성
-        DetailMemberEntity detailMemberEntity = DetailMemberEntity.builder()
-                .memberEmail(dto.getMemberEmail())
-                .memberPw(encoder.encode(pw))
-                .memberMajor(dto.getMemberMajor())
-                .memberPhone(dto.getMemberPhone())
-                .build();
-        detailMemberRepository.save(detailMemberEntity);
-
         // MemberEntity 생성
         MemberEntity memberEntity = MemberEntity.builder()
                 .memberStuNum(stuNum)
@@ -62,9 +53,19 @@ public class MemberService {
                 .memberStatus("신입생")
                 .memberScore(0)
                 .memberGitUrl(dto.getMemberGitUrl())
-                .detailMemberEntity(detailMemberEntity)
+
                 .build();
         memberRepository.save(memberEntity);
+
+        // DetailMemberEntity 먼저 생성
+        DetailMemberEntity detailMemberEntity = DetailMemberEntity.builder()
+                .memberEmail(dto.getMemberEmail())
+                .memberPw(encoder.encode(pw))
+                .memberMajor(dto.getMemberMajor())
+                .memberPhone(dto.getMemberPhone())
+                .memberEntity(memberEntity)
+                .build();
+        detailMemberRepository.save(detailMemberEntity);
 
         return name;
     }

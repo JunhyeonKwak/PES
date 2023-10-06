@@ -25,15 +25,19 @@ public class AnswerEntity extends BaseEntity {
     private String answerFst;
     private String answerSec;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberStuNum")
     private MemberEntity memberEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "problemId")
+    private ProblemEntity problemEntity;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "questionFst")
     private QuestionEntity questionFst;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "questionSec")
     private QuestionEntity questionSec;
 

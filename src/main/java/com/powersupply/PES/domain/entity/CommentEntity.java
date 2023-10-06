@@ -21,9 +21,11 @@ public class CommentEntity extends BaseEntity {
     private int commentPassFail;
     private String commentContent;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberStuNum")
     private MemberEntity memberEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "answerId")
     private AnswerEntity answerEntity;
 }

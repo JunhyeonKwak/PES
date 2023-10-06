@@ -23,7 +23,7 @@ public class QuestionEntity extends BaseEntity {
     private String questionContent;
     private int questionDifficulty;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "problem_id")
     private ProblemEntity problemEntity;
 

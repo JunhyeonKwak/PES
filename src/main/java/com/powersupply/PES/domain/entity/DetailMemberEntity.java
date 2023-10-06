@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class DetailMemberEntity extends BaseEntity{
 
     @Id
-    @Column(name = "memberEmail", unique = true)
+    @Column(name = "memberEmail")
     private String memberEmail; // 이메일
 
     @Column(name = "memberPw")
@@ -28,6 +28,7 @@ public class DetailMemberEntity extends BaseEntity{
     @Column(name = "memberPhone", unique = true)
     private String memberPhone; // 전화번호
 
-    @OneToOne(mappedBy = "detailMemberEntity", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "memberStuNum")
     private MemberEntity memberEntity;
 }

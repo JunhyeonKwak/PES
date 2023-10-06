@@ -24,6 +24,9 @@ public class ProblemEntity extends BaseEntity{
     private String problemContent;
     private int problemScore;
 
-    @OneToMany(mappedBy = "problemEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "problemEntity")
     private List<QuestionEntity> questionEntities = new ArrayList<>();
+
+    @OneToMany(mappedBy = "problemEntity")
+    private List<AnswerEntity> answerEntities = new ArrayList<>();
 }
