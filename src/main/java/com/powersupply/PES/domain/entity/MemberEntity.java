@@ -41,5 +41,8 @@ public class MemberEntity {
     private DetailMemberEntity detailMemberEntity;
 
     @OneToMany(mappedBy = "memberEntity")
-    private List<AnswerEntity> answerEntityList = new ArrayList<>();
+    private List<AnswerEntity> answerEntities = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity")
+    private List<CommentEntity> commentEntities = new ArrayList<>();
 }

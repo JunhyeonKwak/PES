@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -29,9 +31,12 @@ public class AnswerEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "questionFst")
-    private  QuestionEntity questionFst;
+    private QuestionEntity questionFst;
 
     @ManyToOne
     @JoinColumn(name = "questionSec")
-    private  QuestionEntity questionSec;
+    private QuestionEntity questionSec;
+
+    @OneToMany(mappedBy = "answerEntity")
+    private List<CommentEntity> commentEntities = new ArrayList<>();
 }
