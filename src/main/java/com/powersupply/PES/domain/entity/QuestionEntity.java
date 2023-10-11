@@ -27,9 +27,11 @@ public class QuestionEntity extends BaseEntity {
     @JoinColumn(name = "problem_id")
     private ProblemEntity problemEntity;
 
+    @Builder.Default
     @OneToMany(mappedBy = "questionFst")
     private List<AnswerEntity> answerEntitiesForFst = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "questionSec")
     private List<AnswerEntity> answerEntitiesForSec = new ArrayList<>();
 }

@@ -39,9 +39,11 @@ public class MemberEntity {
     @OneToOne(mappedBy = "memberEntity")
     private DetailMemberEntity detailMemberEntity;
 
+    @Builder.Default
     @OneToMany(mappedBy = "memberEntity")
     private List<AnswerEntity> answerEntities = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "memberEntity")
     private List<CommentEntity> commentEntities = new ArrayList<>();
 }

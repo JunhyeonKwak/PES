@@ -24,9 +24,11 @@ public class ProblemEntity extends BaseEntity{
     private String problemContent;
     private int problemScore;
 
+    @Builder.Default
     @OneToMany(mappedBy = "problemEntity")
     private List<QuestionEntity> questionEntities = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "problemEntity")
     private List<AnswerEntity> answerEntities = new ArrayList<>();
 }

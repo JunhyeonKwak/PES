@@ -41,6 +41,7 @@ public class AnswerEntity extends BaseEntity {
     @JoinColumn(name = "questionSec")
     private QuestionEntity questionSec;
 
+    @Builder.Default
     @OneToMany(mappedBy = "answerEntity")
     private List<CommentEntity> commentEntities = new ArrayList<>();
 }
