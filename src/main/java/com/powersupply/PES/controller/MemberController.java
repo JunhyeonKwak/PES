@@ -66,12 +66,13 @@ public class MemberController {
 
         Cookie cookie = new Cookie("Authorization", token);
         cookie.setMaxAge(60 * 60); // 쿠키 유효 시간 (예: 1시간)
-        cookie.setSecure(true); // HTTPS에서만 쿠키 사용
+        //cookie.setSecure(true); // HTTPS에서만 쿠키 사용
         cookie.setPath("/"); // 도메인 전체에서 사용 가능하도록 설정
         //cookie.setHttpOnly(true); // JavaScript에서 쿠키에 접근할 수 없도록 설정
         // SameSite=None과 Secure 플래그를 설정
-        response.addHeader("Set-Cookie", String.format("%s=%s; Max-Age=%s; Secure; SameSite=None",
-                cookie.getName(), cookie.getValue(), cookie.getMaxAge()));
+        // response.addHeader("Set-Cookie", String.format("%s=%s; Max-Age=%s; Secure; SameSite=None",
+        //         cookie.getName(), cookie.getValue(), cookie.getMaxAge()));
+        response.addCookie(cookie);
 
         return ResponseUtil.successResponse("로그인에 성공했습니다.");
     }
