@@ -11,7 +11,7 @@ public class ProblemDTO {
         private Long problemId;
         private String problemTitle;
         private int problemScore;
-        private String problemState;
+        private String answerState;
     }
 
     @Getter

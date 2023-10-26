@@ -16,7 +16,7 @@ public class ProblemController {
 
     private final ProblemService problemService;
 
-    @GetMapping("/problemlist")
+    @GetMapping("/api/problemlist")
     public ResponseEntity<List<ProblemDTO.ProblemResponse>> getProblemList() {
         return ResponseEntity.ok().body(problemService.getProblemList());
     }
