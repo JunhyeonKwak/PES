@@ -18,7 +18,7 @@ public class ProblemService {
     private final ProblemRepository problemRepository;
 
     // 문제 가져오기
-    public List<ProblemDTO.ProblemResponse> getProblem() {
+    public List<ProblemDTO.ProblemResponse> getProblemList() {
 
         List<ProblemEntity> problemEntityList = problemRepository.findAll();
         List<ProblemDTO.ProblemResponse> problemResponseList = new ArrayList<>();
@@ -38,5 +38,17 @@ public class ProblemService {
             problemResponseList.add(problemResponse);
         }
         return problemResponseList;
+    }
+
+    public ProblemDTO.ShowProblem getProblem(Long problemId) {
+        ProblemEntity selectedEntity = problemRepository.findById(problemId)
+                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND, "잘못된 페이지 호출"));
+
+        return ProblemDTO.ShowProblem.builder()
+                .problemId(selectedEntity.getProblemId())
+                .problemTitle(selectedEntity.getProblemTitle())
+                .problemContent(selectedEntity.getProblemContent())
+                .problemScore(selectedEntity.getProblemScore())
+                .build();
     }
 }
