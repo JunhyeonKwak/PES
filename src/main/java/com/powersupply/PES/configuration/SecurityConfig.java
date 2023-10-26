@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.expression.SecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
@@ -36,10 +37,11 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/css/**","/js/**").permitAll() // 정적 메소드 누구나 접근 가능
                 .antMatchers("/signin","/signup","/finduser").permitAll() // 누구나 접근 가능
-                .antMatchers("/api/signin","/api/signup","/api/finduser","/api/problemlist","/api/problem/**").permitAll() // 기본 요청 언제나 접근 가능
+                .antMatchers("/api/signin","/api/signup","/api/finduser","/api/rank","/api/problemlist/**","/api/problem/**").permitAll() // 기본 요청 언제나 접근 가능
                 .antMatchers("/api/submit/**","/api/answer/**").hasRole("NEW_STUDENT")
-                .antMatchers("/api/comment/**","/api/commentlist/**","/api/questions/**").hasRole("REGULAR_STUDENT")
-                .antMatchers("/api/manage/**").hasRole("MANAGER")
+                .antMatchers("/api/comment/**","/api/commentlist/**").hasRole("REGULAR_STUDENT")
+                .antMatchers(HttpMethod.GET, "/api/questions/**").hasRole("REGULAR_STUDENT")
+                .antMatchers("/api/manage/**","/api/questions/**").hasRole("MANAGER")
                 .anyRequest().hasRole("USER")
                 .and()
                 .sessionManagement()
