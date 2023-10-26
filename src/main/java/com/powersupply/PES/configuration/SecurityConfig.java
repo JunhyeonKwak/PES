@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/css/**","/js/**").permitAll() // 정적 메소드 누구나 접근 가능
                 .antMatchers("/signin","/signup","/finduser").permitAll() // 누구나 접근 가능
-                .antMatchers("/api/signin","/api/signup","/api/finduser","/api/problemlist").permitAll() // 기본 요청 언제나 접근 가능
+                .antMatchers("/api/signin","/api/signup","/api/finduser","/api/problemlist","/api/problem/**").permitAll() // 기본 요청 언제나 접근 가능
                 .antMatchers("/api/submit/**","/api/answer/**").hasRole("NEW_STUDENT")
                 .antMatchers("/api/comment/**","/api/commentlist/**","/api/questions/**").hasRole("REGULAR_STUDENT")
                 .antMatchers("/api/manage/**").hasRole("MANAGER")
