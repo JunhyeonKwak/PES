@@ -13,4 +13,13 @@ public class ProblemDTO {
         private int problemScore;
         private String problemState;
     }
+
+    @Getter
+    @Builder
+    public static class ShowProblem {
+        private Long problemId;
+        private String problemTitle;
+        private String problemContent;
+        private int problemScore;
+    }
 }
