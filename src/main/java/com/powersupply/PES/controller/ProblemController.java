@@ -25,4 +25,9 @@ public class ProblemController {
     public ResponseEntity<ProblemDTO.ShowProblem> getProblem(@PathVariable Long problemId) {
         return ResponseEntity.ok().body(problemService.getProblem(problemId));
     }
+
+    @GetMapping("/api/problem/{problemId}/{memberStuNum}")
+    public ResponseEntity<ProblemDTO.SolveForm> getSolveForm(@PathVariable Long problemId, @PathVariable String memberStuNum) {
+        return ResponseEntity.ok().body(problemService.getSolveForm(problemId,memberStuNum));
+    }
 }

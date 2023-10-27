@@ -82,4 +82,20 @@ public class ProblemService {
                 .problemScore(selectedEntity.getProblemScore())
                 .build();
     }
+
+    public ProblemDTO.SolveForm getSolveForm(Long problemId, String memberStuNum) {
+         AnswerEntity answerEntity = answerRepository.findByMemberEntity_MemberStuNumAndProblemEntity_ProblemId(memberStuNum, problemId)
+                 .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND, "관련 자료가 없음"));
+
+
+         return ProblemDTO.SolveForm.builder()
+                 .answerState(answerEntity.getAnswerState())
+                 .answerUrl(answerEntity.getAnswerUrl())
+                 .questionContentFst(answerEntity.getQuestionFst().getQuestionContent())
+                 .questionContentSec(answerEntity.getQuestionSec().getQuestionContent())
+                 .answerFst(answerEntity.getAnswerFst())
+                 .answerSec(answerEntity.getAnswerSec())
+                 .updateTime(answerEntity.getUpdatedTime())
+                 .build();
+    }
 }
