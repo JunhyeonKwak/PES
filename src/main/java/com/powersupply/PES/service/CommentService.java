@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,13 +33,16 @@ public class CommentService {
         List<CommentDTO.ViewComment> viewComments = new ArrayList<>();
 
         for(CommentEntity commentEntity: commentEntities) {
+            LocalDateTime updateTime = commentEntity.getUpdatedTime();
+            if(updateTime == null) {
+                updateTime = commentEntity.getCreatedTime();
+            }
             CommentDTO.ViewComment viewComment = CommentDTO.ViewComment.builder()
                     .memberName(commentEntity.getMemberEntity().getMemberName())
                     .memberGen(commentEntity.getMemberEntity().getMemberGen())
                     .commentPassFail(commentEntity.getCommentPassFail())
                     .commentContent(commentEntity.getCommentContent())
-                    .createTime(commentEntity.getCreatedTime())
-                    .updateTime(commentEntity.getUpdatedTime())
+                    .updateTime(updateTime)
                     .build();
             viewComments.add(viewComment);
         }

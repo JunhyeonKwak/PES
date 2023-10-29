@@ -14,7 +14,6 @@ public class CommentDTO {
         private int memberGen;
         private int commentPassFail;
         private String commentContent;
-        private LocalDateTime createTime;
         private LocalDateTime updateTime;
     }
 }
