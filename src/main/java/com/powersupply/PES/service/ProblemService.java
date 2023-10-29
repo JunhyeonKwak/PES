@@ -14,6 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -71,6 +72,7 @@ public class ProblemService {
         return problemResponseList;
     }
 
+    // 문제 보기
     public ProblemDTO.ShowProblem getProblem(Long problemId) {
         ProblemEntity selectedEntity = problemRepository.findById(problemId)
                 .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND, "잘못된 페이지 호출"));
@@ -83,10 +85,15 @@ public class ProblemService {
                 .build();
     }
 
+    // 풀이 폼 가져오기
     public ProblemDTO.SolveForm getSolveForm(Long problemId, String memberStuNum) {
          AnswerEntity answerEntity = answerRepository.findByMemberEntity_MemberStuNumAndProblemEntity_ProblemId(memberStuNum, problemId)
                  .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND, "관련 자료가 없음"));
 
+        LocalDateTime updateTime = answerEntity.getUpdatedTime();
+         if(updateTime == null) {
+             updateTime = answerEntity.getCreatedTime();
+         }
 
          return ProblemDTO.SolveForm.builder()
                  .answerState(answerEntity.getAnswerState())
@@ -95,7 +102,7 @@ public class ProblemService {
                  .questionContentSec(answerEntity.getQuestionSec().getQuestionContent())
                  .answerFst(answerEntity.getAnswerFst())
                  .answerSec(answerEntity.getAnswerSec())
-                 .updateTime(answerEntity.getUpdatedTime())
+                 .updateTime(updateTime)
                  .build();
     }
 }
