@@ -19,6 +19,7 @@ public class CommentDTO {
 
     @Getter
     public static class PostComment {
+        private String writer;
         private int commentPassFail;
         private String commentContent;
     }
