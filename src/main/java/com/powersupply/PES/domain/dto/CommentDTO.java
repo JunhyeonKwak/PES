@@ -16,4 +16,10 @@ public class CommentDTO {
         private String commentContent;
         private LocalDateTime updateTime;
     }
+
+    @Getter
+    public static class PostComment {
+        private int commentPassFail;
+        private String commentContent;
+    }
 }
