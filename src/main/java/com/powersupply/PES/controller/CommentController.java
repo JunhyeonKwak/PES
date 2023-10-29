@@ -26,4 +26,11 @@ public class CommentController {
         commentService.saveComment(problemId, memberStuNum, dto);
         return ResponseUtil.successResponse("성공");
     }
+
+    // 댓글 수정하기
+    @PatchMapping("/api/comment/{problemId}/{memberStuNum}")
+    public ResponseEntity<?> patchComment(@PathVariable Long problemId, @PathVariable String memberStuNum, @RequestBody CommentDTO.PatchComment dto) {
+        commentService.patchComment(problemId, memberStuNum, dto);
+        return ResponseUtil.successResponse("성공");
+    }
 }

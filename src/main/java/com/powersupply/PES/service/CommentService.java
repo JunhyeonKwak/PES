@@ -55,6 +55,8 @@ public class CommentService {
 
     // 댓글 달기
     public void saveComment(Long problemId, String memberStuNum, CommentDTO.PostComment dto) {
+
+        // 본인 확인 로직
         if(!dto.getWriter().equals(JwtUtil.getMemberStuNumFromToken())){
             throw new AppException(ErrorCode.INVALID_INPUT,"확인할 수 없는 유저입니다.");
         }
@@ -103,5 +105,25 @@ public class CommentService {
             answerEntity.setAnswerState("Failure");
         }
         answerRepository.save(answerEntity);  // answerState 변경 사항 저장
+    }
+
+    // 답안 수정하기
+    public void patchComment(Long problemId, String memberStuNum, CommentDTO.PatchComment dto) {
+        // 본인 확인 로직
+        if(!dto.getWriter().equals(JwtUtil.getMemberStuNumFromToken())){
+            throw new AppException(ErrorCode.INVALID_INPUT,"확인할 수 없는 유저입니다.");
+        }
+
+        AnswerEntity answerEntity = answerRepository.findByMemberEntity_MemberStuNumAndProblemEntity_ProblemId(memberStuNum, problemId)
+                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND,"해당 답안이 없습니다."));
+
+        // 연결된 comment 가져오기
+        CommentEntity commentEntity = commentRepository.findByAnswerEntityAndMemberEntity_MemberStuNum(answerEntity, dto.getWriter())
+                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND,"해당 댓글이 없습니다."));
+
+        // 오류가 없다면 저장
+        commentEntity.setCommentContent(dto.getCommentContent());
+
+        commentRepository.save(commentEntity);
     }
 }

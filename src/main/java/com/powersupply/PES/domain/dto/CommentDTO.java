@@ -23,4 +23,10 @@ public class CommentDTO {
         private int commentPassFail;
         private String commentContent;
     }
+
+    @Getter
+    public static class PatchComment {
+        private String writer;
+        private String commentContent;
+    }
 }
