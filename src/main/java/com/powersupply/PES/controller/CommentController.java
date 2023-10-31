@@ -15,6 +15,11 @@ public class CommentController {
 
     private final CommentService commentService;
 
+    @GetMapping("/mycomment")
+    public String getComment() {
+        return "mycomment";
+    }
+
     @GetMapping("/api/comment/{problemId}/{memberStuNum}")
     public ResponseEntity<List<CommentDTO.ViewComment>> viewComment(@PathVariable Long problemId, @PathVariable String memberStuNum) {
         return ResponseEntity.ok().body(commentService.getViewComment(problemId, memberStuNum));
