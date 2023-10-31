@@ -26,6 +26,11 @@ public class ProblemController {
         return "problembank";
     }
 
+    @GetMapping("/problembank/{problemId}")
+    public String getQuestionBank() {
+        return "questionbank";
+    }
+
     @GetMapping("/api/problemlist")
     public ResponseEntity<List<ProblemDTO.ProblemResponse>> getProblemList() {
         return ResponseEntity.ok().body(problemService.getProblemList());
