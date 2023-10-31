@@ -3,12 +3,12 @@ package com.powersupply.PES.controller;
 import com.powersupply.PES.domain.dto.AnswerDTO;
 import com.powersupply.PES.service.AnswerService;
 import com.powersupply.PES.utils.ResponseUtil;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class AnswerController {
 
