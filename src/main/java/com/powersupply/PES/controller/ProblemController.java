@@ -36,6 +36,12 @@ public class ProblemController {
         return ResponseEntity.ok().body(problemService.getProblemList());
     }
 
+    // 특정 문제의 요약 칼럼
+    @GetMapping("/api/problem/{problemId}/simple")
+    public ResponseEntity<ProblemDTO.ShowProblemSimple> getProblemSimple(@PathVariable Long problemId) {
+        return ResponseEntity.ok().body(problemService.getProblemSimple(problemId));
+    }
+
     @GetMapping("/api/problem/{problemId}")
     public ResponseEntity<ProblemDTO.ShowProblem> getProblem(@PathVariable Long problemId) {
         return ResponseEntity.ok().body(problemService.getProblem(problemId));

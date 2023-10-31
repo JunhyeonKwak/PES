@@ -105,4 +105,14 @@ public class ProblemService {
                  .updateTime(updateTime)
                  .build();
     }
+
+    public ProblemDTO.ShowProblemSimple getProblemSimple(Long problemId) {
+        ProblemEntity problemEntity = problemRepository.findById(problemId)
+                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND,"해당 문제가 없습니다."));
+        return ProblemDTO.ShowProblemSimple.builder()
+                .problemId(problemEntity.getProblemId())
+                .problemTitle(problemEntity.getProblemTitle())
+                .problemScore(problemEntity.getProblemScore())
+                .build();
+    }
 }

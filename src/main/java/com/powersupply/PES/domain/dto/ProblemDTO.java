@@ -36,4 +36,12 @@ public class ProblemDTO {
         private String answerSec;
         private LocalDateTime updateTime;
     }
+
+    @Getter
+    @Builder
+    public static class ShowProblemSimple {
+        private Long problemId;
+        private String problemTitle;
+        private int problemScore;
+    }
 }
