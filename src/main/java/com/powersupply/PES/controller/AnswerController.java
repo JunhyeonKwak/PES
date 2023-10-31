@@ -3,6 +3,7 @@ package com.powersupply.PES.controller;
 import com.powersupply.PES.domain.dto.AnswerDTO;
 import com.powersupply.PES.service.AnswerService;
 import com.powersupply.PES.utils.ResponseUtil;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class AnswerController {
 
     private final AnswerService answerService;
+
+    @GetMapping("/solve/{problemId}")
+    public String getSolve() {
+        return "solve";
+    }
 
     // 채점 하기
     @PostMapping("/api/submit/{problemId}/{memberStuNum}")
