@@ -29,4 +29,13 @@ public class CommentDTO {
         private String writer;
         private String commentContent;
     }
+
+    @Getter
+    @Builder
+    public static class MyComment {
+        private Long problemId;
+        private String memberStuNum;
+        private String answerState;
+        private int commentPassFail;
+    }
 }

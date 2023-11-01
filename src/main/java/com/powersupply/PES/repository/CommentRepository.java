@@ -12,4 +12,5 @@ public interface CommentRepository extends JpaRepository<CommentEntity,Long> {
 
     Optional<CommentEntity> findByAnswerEntityAndMemberEntity_MemberStuNum(AnswerEntity answerEntity, String stuNum);
 
+    List<CommentEntity> findByMemberEntity_MemberStuNum(String memberStuNum);
 }

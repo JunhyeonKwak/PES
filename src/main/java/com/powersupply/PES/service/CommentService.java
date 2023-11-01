@@ -126,4 +126,23 @@ public class CommentService {
 
         commentRepository.save(commentEntity);
     }
+
+    // (재)내가 쓴 댓글보기
+    @Transactional
+    public List<CommentDTO.MyComment> getMyComment() {
+        String memberStuNum = JwtUtil.getMemberStuNumFromToken();
+        List<CommentEntity> commentEntityList = commentRepository.findByMemberEntity_MemberStuNum(memberStuNum);
+        List<CommentDTO.MyComment> myCommentList = new ArrayList<>();
+
+        for(CommentEntity commentEntity: commentEntityList) {
+            CommentDTO.MyComment myComment = CommentDTO.MyComment.builder()
+                    .problemId(commentEntity.getAnswerEntity().getProblemEntity().getProblemId())
+                    .memberStuNum(commentEntity.getAnswerEntity().getMemberEntity().getMemberStuNum())
+                    .answerState(commentEntity.getAnswerEntity().getAnswerState())
+                    .commentPassFail(commentEntity.getCommentPassFail())
+                    .build();
+            myCommentList.add(myComment);
+        }
+        return myCommentList;
+    }
 }
