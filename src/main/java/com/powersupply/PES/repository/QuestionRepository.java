@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface QuestionRepository extends JpaRepository<QuestionEntity,Long> {
     List<QuestionEntity> findByProblemEntity_ProblemId(Long problemId, Pageable pageable);
+
+    List<QuestionEntity> findByProblemEntity_ProblemId(Long problemId);
 }
