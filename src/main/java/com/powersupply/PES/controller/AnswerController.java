@@ -5,8 +5,11 @@ import com.powersupply.PES.service.AnswerService;
 import com.powersupply.PES.utils.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,6 +27,12 @@ public class AnswerController {
     public ResponseEntity<?> submit(@PathVariable Long problemId, @PathVariable String memberStuNum, @RequestBody AnswerDTO.gitUrl dto) {
         answerService.submit(problemId, memberStuNum, dto);
         return ResponseUtil.successResponse("성공");
+    }
+
+    // (재)풀이 목록 보기
+    @GetMapping("/api/solvelist/{problemId}")
+    public ResponseEntity<List<AnswerDTO.SolveList>> getSolveList(@PathVariable Long problemId) {
+        return ResponseEntity.ok().body(answerService.getSolveList(problemId));
     }
 
     // 답변 하기

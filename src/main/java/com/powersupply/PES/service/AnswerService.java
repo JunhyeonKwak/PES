@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -130,5 +131,28 @@ public class AnswerService {
         answerEntity.setAnswerFst(dto.getAnswerFst());
         answerEntity.setAnswerSec(dto.getAnswerSec());
         answerRepository.save(answerEntity);
+    }
+
+    // (재)풀이 목록 보기
+    @Transactional
+    public List<AnswerDTO.SolveList> getSolveList(Long problemId) {
+        List<AnswerEntity> answerEntityList = answerRepository.findAllByProblemEntity_ProblemId(problemId);
+        List<AnswerDTO.SolveList> solveLists = new ArrayList<>();
+        for(AnswerEntity answerEntity: answerEntityList) {
+            int commentCount = 0;
+            // AnswerEntity와 CommentEntity가 연관 관계에 있다면
+            if(answerEntity.getCommentEntities() != null) {
+                commentCount = answerEntity.getCommentEntities().size();
+            }
+
+            AnswerDTO.SolveList solveList = AnswerDTO.SolveList.builder()
+                    .memberStuNum(answerEntity.getMemberEntity().getMemberStuNum())
+                    .memberName(answerEntity.getMemberEntity().getMemberName())
+                    .commentCount(commentCount)
+                    .answerState(answerEntity.getAnswerState())
+                    .build();
+            solveLists.add(solveList);
+        }
+        return solveLists;
     }
 }

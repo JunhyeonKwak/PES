@@ -16,4 +16,13 @@ public class AnswerDTO {
     public static class gitUrl {
         private String answerUrl;
     }
+
+    @Getter
+    @Builder
+    public static class SolveList {
+        private String memberStuNum;
+        private String memberName;
+        private int commentCount;
+        private String answerState;
+    }
 }
