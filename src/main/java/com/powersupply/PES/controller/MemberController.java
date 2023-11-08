@@ -20,6 +20,11 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @GetMapping("")
+    public String home() {
+        return "redirect:/signin";
+    }
+
     // 회원가입 페이지 불러오기
     @GetMapping("/signup")
     public String getSignUp() {

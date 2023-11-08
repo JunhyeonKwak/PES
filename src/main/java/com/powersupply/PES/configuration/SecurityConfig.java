@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .cors().configurationSource(corsConfigurationSource()).and() // cross site 도메인 다른 경우 허용
                 .authorizeRequests()
                 .antMatchers("/css/**","/js/**").permitAll() // 정적 메소드 누구나 접근 가능
-                .antMatchers("/signin","/signup","/finduser","/problem/**").permitAll() // 누구나 접근 가능
+                .antMatchers("/","/signin","/signup","/finduser","/problem/**").permitAll() // 누구나 접근 가능
                 .antMatchers("/api/signin","/api/signup","/api/finduser","/api/rank","/api/problemlist/**","/api/problem/**").permitAll() // 기본 요청 언제나 접근 가능
                 .antMatchers(HttpMethod.GET, "/api/comment/**").permitAll()
                 .antMatchers("/api/submit/**","/api/answer/**").hasRole("NEW_STUDENT")
